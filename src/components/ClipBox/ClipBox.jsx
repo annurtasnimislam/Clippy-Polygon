@@ -11,20 +11,27 @@ export default function ClipBox() {
   const handleMouseDown = (index, e) => {
     e.preventDefault();
     document.addEventListener("mousemove", (e) => handleMouseMove(index, e));
-    document.addEventListener("mouseup", handleMouseUp);
+    document.addEventListener("mouseup", handleMouseUp(e));
   };
 
   const handleMouseMove = (index, e) => {
-    const rect = document.body.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
+    const outerBox = document.querySelector(`.${classes.clipBox}`);
+    const outerBoxRect = outerBox.getBoundingClientRect();
+
+    const mouseX = e.clientX - outerBoxRect.left;
+    const mouseY = e.clientY - outerBoxRect.top;
+
+    const percentageX = (mouseX / outerBoxRect.width) * 100;
+    const percentageY = (mouseY / outerBoxRect.height) * 100;
 
     const newPoints = [...points];
-    newPoints[index] = { x: mouseX, y: mouseY };
+    newPoints[index] = { x: percentageX, y: percentageY };
     setPoints(newPoints);
+    document.addEventListener("mouseup", handleMouseUp(e));
   };
 
-  const handleMouseUp = () => {
+  const handleMouseUp = (e) => {
+    console.log("done");
     document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
   };
