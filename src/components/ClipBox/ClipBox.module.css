@@ -1,0 +1,24 @@
+.clipBox {
+  height: 18em;
+  width: 20em;
+  border: 1px solid lightgray;
+  position: relative;
+}
+
+.triangle {
+  height: 100%;
+  width: 100%;
+  background-image: url("../../assets/bridge.jpeg");
+  background-size: cover;
+  /* position: relative; */
+  background-color: aqua;
+}
+
+.handle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: rgba(75, 75, 179, 0.637);
+  border-radius: 50%;
+  cursor: grab;
+}
