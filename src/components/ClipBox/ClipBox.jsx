@@ -21,13 +21,16 @@ export default function ClipBox() {
     const mouseX = e.clientX - outerBoxRect.left;
     const mouseY = e.clientY - outerBoxRect.top;
 
-    const percentageX = (mouseX / outerBoxRect.width) * 100;
-    const percentageY = (mouseY / outerBoxRect.height) * 100;
+    // Ensure the mouse coordinates stay within the bounds of the outer box
+    const boundedX = Math.max(0, Math.min(mouseX, outerBoxRect.width));
+    const boundedY = Math.max(0, Math.min(mouseY, outerBoxRect.height));
+
+    const percentageX = (boundedX / outerBoxRect.width) * 100;
+    const percentageY = (boundedY / outerBoxRect.height) * 100;
 
     const newPoints = [...points];
     newPoints[index] = { x: percentageX, y: percentageY };
     setPoints(newPoints);
-    document.addEventListener("mouseup", handleMouseUp(e));
   };
 
   const handleMouseUp = (e) => {
