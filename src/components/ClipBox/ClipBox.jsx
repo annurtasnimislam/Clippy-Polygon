@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import classes from "./ClipBox.module.css";
 
 export default function ClipBox() {
@@ -8,43 +8,42 @@ export default function ClipBox() {
     { x: 100, y: 100 },
   ]);
 
+  const dragRef = useRef(null);
+
   const handleMouseDown = (index, e) => {
     e.preventDefault();
-    document.addEventListener("mousemove", (e) => handleMouseMove(index, e));
-    document.addEventListener("mouseup", handleMouseUp(e));
+    dragRef.current = { index, startX: e.clientX, startY: e.clientY };
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
   };
 
-  const handleMouseMove = (index, e) => {
-    const outerBox = document.querySelector(`.${classes.clipBox}`);
-    const outerBoxRect = outerBox.getBoundingClientRect();
+  const handleMouseMove = (e) => {
+    if (dragRef.current !== null) {
+      const { index } = dragRef.current;
+      const outerBox = document.querySelector(`.${classes.clipBox}`);
+      const outerBoxRect = outerBox.getBoundingClientRect();
 
-    const mouseX = e.clientX - outerBoxRect.left;
-    const mouseY = e.clientY - outerBoxRect.top;
+      let mouseX = e.clientX - outerBoxRect.left;
+      let mouseY = e.clientY - outerBoxRect.top;
 
-    // Ensure the mouse coordinates stay within the bounds of the outer box
-    const boundedX = Math.max(0, Math.min(mouseX, outerBoxRect.width));
-    const boundedY = Math.max(0, Math.min(mouseY, outerBoxRect.height));
+      // Ensure the mouse coordinates stay within the bounds of the outer box
+      mouseX = Math.max(0, Math.min(mouseX, outerBoxRect.width));
+      mouseY = Math.max(0, Math.min(mouseY, outerBoxRect.height));
 
-    const percentageX = (boundedX / outerBoxRect.width) * 100;
-    const percentageY = (boundedY / outerBoxRect.height) * 100;
+      const percentageX = (mouseX / outerBoxRect.width) * 100;
+      const percentageY = (mouseY / outerBoxRect.height) * 100;
 
-    const newPoints = [...points];
-    newPoints[index] = { x: percentageX, y: percentageY };
-    setPoints(newPoints);
+      const newPoints = [...points];
+      newPoints[index] = { x: percentageX, y: percentageY };
+      setPoints(newPoints);
+    }
   };
 
-  const handleMouseUp = (e) => {
-    console.log("done");
+  const handleMouseUp = () => {
+    dragRef.current = null;
     document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
   };
-
-  useEffect(() => {
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, []);
 
   return (
     <div className={classes.clipBox}>
@@ -64,6 +63,13 @@ export default function ClipBox() {
           onMouseDown={(e) => handleMouseDown(index, e)}
         />
       ))}
+      <p>
+        clip-path: polygon(
+        {points
+          .map((point) => `${parseInt(point.x)}% ${parseInt(point.y)}%`)
+          .join(", ")}
+        );
+      </p>
     </div>
   );
 }
