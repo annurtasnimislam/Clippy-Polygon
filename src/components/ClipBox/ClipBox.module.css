@@ -6,6 +6,8 @@
 }
 .clipBox > p {
   margin-top: 5em;
+  color: darkgreen;
+  font-weight: 500;
 }
 .triangle {
   height: 100%;

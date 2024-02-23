@@ -1,0 +1,4 @@
+.shapeBox > div:hover {
+  cursor: pointer;
+  color: darkolivegreen;
+}
