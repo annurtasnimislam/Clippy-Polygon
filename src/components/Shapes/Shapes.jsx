@@ -1,4 +1,3 @@
-import { useState } from "react";
 import classes from "./Shapes.module.css";
 
 export default function Shapes({ setPoints }) {

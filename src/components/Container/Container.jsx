@@ -10,8 +10,6 @@ export default function Container() {
     { x: 100, y: 100 },
   ]);
 
-  console.log("points", points);
-
   return (
     <div className={classes.wrapper}>
       <ClipBox points={points} setPoints={setPoints} />
