@@ -1,11 +1,34 @@
 import classes from "./BorderLine.module.css";
 
-const BorderLine = ({ startPoint, endPoint }) => {
+const BorderLine = ({ startPoint, endPoint, setPoints, points }) => {
   const distanceX = endPoint.x - startPoint.x;
   const distanceY = endPoint.y - startPoint.y;
 
   const angle = Math.atan2(distanceY, distanceX) * (180 / Math.PI);
   const sideLength = Math.hypot(distanceX, distanceY);
+
+  const handleClick = (e) => {
+    const outerBox = document.querySelector("#outerBox");
+    const outerBoxRect = outerBox.getBoundingClientRect();
+
+    let mouseX = e.clientX - outerBoxRect.left;
+    let mouseY = e.clientY - outerBoxRect.top;
+
+    const percentageX = (mouseX / outerBoxRect.width) * 100;
+    const percentageY = (mouseY / outerBoxRect.height) * 100;
+
+    // Finds the index of the endPoint in the points array
+    const endIndex = points.findIndex((point) => point === endPoint);
+
+    // Inserts the new point after the endPoint
+    const newPoints = [
+      ...points.slice(0, endIndex), // Points before the endPoint
+      { x: percentageX, y: percentageY }, // New point
+      ...points.slice(endIndex), // Points after the endPoint
+    ];
+
+    setPoints(newPoints);
+  };
 
   const style = {
     width: `${sideLength}%`,
@@ -16,7 +39,9 @@ const BorderLine = ({ startPoint, endPoint }) => {
     top: `${startPoint.y}%`,
   };
 
-  return <div className={classes.side} style={style}></div>;
+  return (
+    <div className={classes.side} style={style} onClick={handleClick}></div>
+  );
 };
 
 export default BorderLine;

@@ -15,7 +15,7 @@ export default function ClipBox({ points, setPoints }) {
   const handleMouseMove = (e) => {
     if (dragRef.current !== null) {
       const { index } = dragRef.current;
-      const outerBox = document.querySelector(`.${classes.clipBox}`);
+      const outerBox = document.querySelector("#outerBox");
       const outerBoxRect = outerBox.getBoundingClientRect();
 
       let mouseX = e.clientX - outerBoxRect.left;
@@ -44,6 +44,7 @@ export default function ClipBox({ points, setPoints }) {
     <div className={classes.clipBox}>
       <div
         className={classes.triangle}
+        id="outerBox"
         style={{
           clipPath: `polygon(${points
             .map((point) => `${point.x}% ${point.y}%`)
@@ -62,7 +63,13 @@ export default function ClipBox({ points, setPoints }) {
       {points.map((startPoint, index) => {
         const endPoint = points[(index + 1) % points.length];
         return (
-          <BorderLine key={index} startPoint={startPoint} endPoint={endPoint} />
+          <BorderLine
+            key={index}
+            startPoint={startPoint}
+            endPoint={endPoint}
+            points={points}
+            setPoints={setPoints}
+          />
         );
       })}
       <p>

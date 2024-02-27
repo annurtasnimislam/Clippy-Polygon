@@ -1,4 +1,7 @@
 .side {
-  background-color: aqua;
-  padding: 2px;
+  padding: 1px;
+}
+.side:hover {
+  background-color: lightsteelblue;
+  z-index: 1;
 }
