@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import classes from "./ClipBox.module.css";
+import BorderLine from "./BorderLine/BorderLine";
 
 export default function ClipBox({ points, setPoints }) {
   const dragRef = useRef(null);
@@ -57,6 +58,13 @@ export default function ClipBox({ points, setPoints }) {
           onMouseDown={(e) => handleMouseDown(index, e)}
         />
       ))}
+
+      {points.map((startPoint, index) => {
+        const endPoint = points[(index + 1) % points.length];
+        return (
+          <BorderLine key={index} startPoint={startPoint} endPoint={endPoint} />
+        );
+      })}
       <p>
         clip-path: polygon(
         {points
