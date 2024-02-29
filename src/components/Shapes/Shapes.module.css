@@ -10,5 +10,5 @@
 
 .shapeBox > div:hover {
   cursor: pointer;
-  color: darkolivegreen;
+  color: rgb(51, 67, 129);
 }
