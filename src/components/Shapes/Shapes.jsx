@@ -1,3 +1,4 @@
+import { useState } from "react";
 import classes from "./Shapes.module.css";
 
 export default function Shapes({ setPoints }) {
@@ -10,8 +11,10 @@ export default function Shapes({ setPoints }) {
     "hexagon",
     "heptagon",
   ];
+  const [active, setActive] = useState("triangle");
 
   const handleShape = (shape) => {
+    setActive(shape);
     if (shape === "triangle") {
       setPoints([
         { x: 50, y: 0 },
@@ -80,7 +83,13 @@ export default function Shapes({ setPoints }) {
     <div className={classes.shapeBox}>
       {shapes.map((s, i) => (
         <div key={i} onClick={() => handleShape(s)}>
-          <p>{s}</p>
+          <p
+            style={{
+              color: s === active ? "darkGreen" : "",
+            }}
+          >
+            {s}
+          </p>
         </div>
       ))}
     </div>
