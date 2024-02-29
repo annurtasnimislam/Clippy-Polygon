@@ -1,7 +1,7 @@
 import { useState } from "react";
 import classes from "./Shapes.module.css";
 
-export default function Shapes({ setPoints }) {
+export default function Shapes({ setPoints, setSelect }) {
   const shapes = [
     "triangle",
     "trapezoid",
@@ -14,6 +14,7 @@ export default function Shapes({ setPoints }) {
   const [active, setActive] = useState("triangle");
 
   const handleShape = (shape) => {
+    setSelect(null);
     setActive(shape);
     if (shape === "triangle") {
       setPoints([

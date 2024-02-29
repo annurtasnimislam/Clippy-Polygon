@@ -1,8 +1,8 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import classes from "./ClipBox.module.css";
 import BorderLine from "./BorderLine/BorderLine";
 
-export default function ClipBox({ points, setPoints }) {
+export default function ClipBox({ points, setPoints, select, setSelect }) {
   const dragRef = useRef(null);
   const boxRef = useRef(null);
 
@@ -41,6 +41,27 @@ export default function ClipBox({ points, setPoints }) {
     document.removeEventListener("mouseup", handleMouseUp);
   };
 
+  const handleKeyDown = (event) => {
+    if (points.length > 3) {
+      if (event.key === "Backspace" && select !== null) {
+        const newPoints = [...points];
+        newPoints.splice(select, 1);
+        setPoints(newPoints);
+        setSelect(null);
+      }
+    } else {
+      alert('Minimum number of handlers should be 3 to operate "delete"');
+      setSelect(null);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [points, setPoints, select]);
+
   return (
     <div className={classes.clipBox}>
       <div
@@ -57,8 +78,13 @@ export default function ClipBox({ points, setPoints }) {
         <div
           key={index}
           className={classes.handle}
-          style={{ left: `${point.x - 3.5}%`, top: `${point.y - 3}%` }}
+          style={{
+            left: `${point.x - 3.5}%`,
+            top: `${point.y - 3}%`,
+            border: select === index ? "2px solid blue" : "",
+          }}
           onMouseDown={(e) => handleMouseDown(index, e)}
+          onClick={() => setSelect(index)}
         />
       ))}
 
