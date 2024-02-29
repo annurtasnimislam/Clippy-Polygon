@@ -80,7 +80,6 @@ export default function Shapes({ setPoints }) {
     <div className={classes.shapeBox}>
       {shapes.map((s, i) => (
         <div key={i} onClick={() => handleShape(s)}>
-          <img src="" alt="" />
           <p>{s}</p>
         </div>
       ))}
