@@ -60,7 +60,7 @@ export default function ClipBox({ points, setPoints, select, setSelect }) {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [points, setPoints, select]);
+  }, [select]);
 
   return (
     <div className={classes.clipBox}>
