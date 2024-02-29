@@ -9,6 +9,7 @@ const BorderLine = ({ startPoint, endPoint, setPoints, points }) => {
 
   const handleClick = (e) => {
     const outerBox = document.querySelector("#outerBox");
+    // const outerBox = boxRef.current;
     const outerBoxRect = outerBox.getBoundingClientRect();
 
     let mouseX = e.clientX - outerBoxRect.left;

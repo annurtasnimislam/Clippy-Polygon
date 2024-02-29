@@ -1,3 +1,4 @@
-import Container from "./Container/Container";
+import ClipBox from "./ClipBox/ClipBox";
+import Shapes from "./Shapes/Shapes";
 
-export { Container };
+export { ClipBox, Shapes };

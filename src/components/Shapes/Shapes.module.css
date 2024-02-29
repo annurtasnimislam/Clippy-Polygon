@@ -1,3 +1,9 @@
+.shapeBox {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .shapeBox > div:hover {
   cursor: pointer;
   color: darkolivegreen;
