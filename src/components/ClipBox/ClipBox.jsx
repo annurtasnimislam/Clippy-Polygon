@@ -42,16 +42,16 @@ export default function ClipBox({ points, setPoints, select, setSelect }) {
   };
 
   const handleKeyDown = (event) => {
-    if (points.length > 3) {
-      if (event.key === "Backspace" && select !== null) {
+    if (event.key === "Backspace" && select !== null) {
+      if (points.length > 3) {
         const newPoints = [...points];
         newPoints.splice(select, 1);
         setPoints(newPoints);
         setSelect(null);
+      } else {
+        alert('Minimum number of handlers should be 3 to operate "delete"');
+        setSelect(null);
       }
-    } else {
-      alert('Minimum number of handlers should be 3 to operate "delete"');
-      setSelect(null);
     }
   };
 
@@ -98,6 +98,7 @@ export default function ClipBox({ points, setPoints, select, setSelect }) {
             points={points}
             setPoints={setPoints}
             setSelect={setSelect}
+            ref={boxRef}
           />
         );
       })}
