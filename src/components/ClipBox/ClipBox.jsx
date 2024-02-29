@@ -4,6 +4,7 @@ import BorderLine from "./BorderLine/BorderLine";
 
 export default function ClipBox({ points, setPoints }) {
   const dragRef = useRef(null);
+  const boxRef = useRef(null);
 
   const handleMouseDown = (index, e) => {
     e.preventDefault();
@@ -15,7 +16,7 @@ export default function ClipBox({ points, setPoints }) {
   const handleMouseMove = (e) => {
     if (dragRef.current !== null) {
       const { index } = dragRef.current;
-      const outerBox = document.querySelector("#outerBox");
+      const outerBox = boxRef.current;
       const outerBoxRect = outerBox.getBoundingClientRect();
 
       let mouseX = e.clientX - outerBoxRect.left;
@@ -45,6 +46,7 @@ export default function ClipBox({ points, setPoints }) {
       <div
         className={classes.triangle}
         id="outerBox"
+        ref={boxRef}
         style={{
           clipPath: `polygon(${points
             .map((point) => `${point.x}% ${point.y}%`)
