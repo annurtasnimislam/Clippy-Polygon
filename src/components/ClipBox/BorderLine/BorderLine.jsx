@@ -1,6 +1,6 @@
 import classes from "./BorderLine.module.css";
 
-const BorderLine = ({ startPoint, endPoint, setPoints, points }) => {
+const BorderLine = ({ startPoint, endPoint, setPoints, points, setSelect }) => {
   const distanceX = endPoint.x - startPoint.x;
   const distanceY = endPoint.y - startPoint.y;
 
@@ -8,6 +8,7 @@ const BorderLine = ({ startPoint, endPoint, setPoints, points }) => {
   const sideLength = Math.hypot(distanceX, distanceY);
 
   const handleClick = (e) => {
+    setSelect(null);
     const outerBox = document.querySelector("#outerBox");
     // const outerBox = boxRef.current;
     const outerBoxRect = outerBox.getBoundingClientRect();

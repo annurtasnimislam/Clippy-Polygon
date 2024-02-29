@@ -97,6 +97,7 @@ export default function ClipBox({ points, setPoints, select, setSelect }) {
             endPoint={endPoint}
             points={points}
             setPoints={setPoints}
+            setSelect={setSelect}
           />
         );
       })}
