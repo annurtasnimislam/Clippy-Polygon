@@ -12,6 +12,7 @@ export default function ClipBox({
 }) {
   const dragRef = useRef(null);
   const boxRef = useRef(null);
+  console.log("ok");
 
   const handleMouseDown = (index, e) => {
     e.preventDefault();
@@ -46,6 +47,7 @@ export default function ClipBox({
     dragRef.current = null;
     document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
+    setZoomLevel(1);
   };
 
   const handleKeyDown = (event) => {
