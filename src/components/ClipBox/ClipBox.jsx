@@ -12,6 +12,7 @@ export default function ClipBox({
 }) {
   const dragRef = useRef(null);
   const boxRef = useRef(null);
+  console.log("ok");
 
   const handleMouseDown = (index, e) => {
     e.preventDefault();

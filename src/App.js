@@ -3,6 +3,8 @@ import { useState } from "react";
 import classes from "./App.module.css";
 
 export default function Container() {
+  console.log("ok");
+
   const [points, setPoints] = useState([
     { x: 50, y: 0 },
     { x: 0, y: 100 },
