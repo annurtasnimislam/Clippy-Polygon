@@ -1,7 +1,8 @@
 import { useState } from "react";
 import classes from "./Shapes.module.css";
 
-export default function Shapes({ setPoints, setSelect }) {
+export default function Shapes({ setPoints, setSelect, setZoomLevel }) {
+  console.log("ok");
   const shapes = [
     "triangle",
     "trapezoid",

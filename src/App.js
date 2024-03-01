@@ -10,6 +10,8 @@ export default function Container() {
     { x: 0, y: 100 },
     { x: 100, y: 100 },
   ]);
+  console.log("ok");
+
   const [select, setSelect] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(1);
 
