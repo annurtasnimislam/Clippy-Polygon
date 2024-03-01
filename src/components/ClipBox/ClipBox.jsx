@@ -1,8 +1,15 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import classes from "./ClipBox.module.css";
 import BorderLine from "./BorderLine/BorderLine";
 
-export default function ClipBox({ points, setPoints, select, setSelect }) {
+export default function ClipBox({
+  points,
+  setPoints,
+  select,
+  setSelect,
+  zoomLevel,
+  setZoomLevel,
+}) {
   const dragRef = useRef(null);
   const boxRef = useRef(null);
 
@@ -60,10 +67,34 @@ export default function ClipBox({ points, setPoints, select, setSelect }) {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [select]);
+  }, [select, points]);
+
+  const handleWheel = (event) => {
+    if (event.metaKey) {
+      event.preventDefault();
+
+      const newZoomLevel = zoomLevel + event.deltaY / 100;
+      const clampedZoomLevel = Math.max(0.5, Math.min(newZoomLevel, 1));
+
+      // Get the center coordinates of the outer box
+      const outerBox = boxRef.current;
+      const outerBoxRect = outerBox.getBoundingClientRect();
+      const centerX = outerBoxRect.width / 2;
+      const centerY = outerBoxRect.height / 2;
+
+      // Adjust the points based on the zoom level and center coordinates
+      const adjustedPoints = points.map((point) => ({
+        x: ((point.x - 50) / zoomLevel) * clampedZoomLevel + 50,
+        y: ((point.y - 50) / zoomLevel) * clampedZoomLevel + 50,
+      }));
+
+      setPoints(adjustedPoints);
+      setZoomLevel(clampedZoomLevel);
+    }
+  };
 
   return (
-    <div className={classes.clipBox}>
+    <div className={classes.clipBox} onWheel={handleWheel}>
       <div
         className={classes.triangle}
         id="outerBox"
@@ -74,19 +105,21 @@ export default function ClipBox({ points, setPoints, select, setSelect }) {
             .join(", ")})`,
         }}
       ></div>
-      {points.map((point, index) => (
-        <div
-          key={index}
-          className={classes.handle}
-          style={{
-            left: `${point.x - 3.5}%`,
-            top: `${point.y - 3}%`,
-            border: select === index ? "2px solid blue" : "",
-          }}
-          onMouseDown={(e) => handleMouseDown(index, e)}
-          onClick={() => setSelect(index)}
-        />
-      ))}
+      {points.map((point, index) => {
+        return (
+          <div
+            key={index}
+            className={classes.handle}
+            style={{
+              left: `${point.x - 3.5}%`,
+              top: `${point.y - 3}%`,
+              border: select === index ? "2px solid blue" : "",
+            }}
+            onMouseDown={(e) => handleMouseDown(index, e)}
+            onClick={() => setSelect(index)}
+          />
+        );
+      })}
 
       {points.map((startPoint, index) => {
         const endPoint = points[(index + 1) % points.length];

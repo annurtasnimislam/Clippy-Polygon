@@ -9,6 +9,7 @@ export default function Container() {
     { x: 100, y: 100 },
   ]);
   const [select, setSelect] = useState(null);
+  const [zoomLevel, setZoomLevel] = useState(1);
 
   return (
     <div className={classes.wrapper}>
@@ -17,8 +18,14 @@ export default function Container() {
         setPoints={setPoints}
         select={select}
         setSelect={setSelect}
+        zoomLevel={zoomLevel}
+        setZoomLevel={setZoomLevel}
       />
-      <Shapes setPoints={setPoints} setSelect={setSelect} />
+      <Shapes
+        setPoints={setPoints}
+        setSelect={setSelect}
+        setZoomLevel={setZoomLevel}
+      />
     </div>
   );
 }
