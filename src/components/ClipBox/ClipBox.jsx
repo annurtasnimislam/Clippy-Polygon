@@ -5,6 +5,7 @@ import BorderLine from "./BorderLine/BorderLine";
 export default function ClipBox({ points, setPoints, select, setSelect }) {
   const dragRef = useRef(null);
   const boxRef = useRef(null);
+  console.log("ok");
 
   const handleMouseDown = (index, e) => {
     e.preventDefault();

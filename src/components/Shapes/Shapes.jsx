@@ -2,6 +2,7 @@ import { useState } from "react";
 import classes from "./Shapes.module.css";
 
 export default function Shapes({ setPoints, setSelect }) {
+  console.log("ok");
   const shapes = [
     "triangle",
     "trapezoid",
