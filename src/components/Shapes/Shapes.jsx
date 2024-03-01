@@ -15,7 +15,6 @@ export default function Shapes({ setPoints, setSelect }) {
   const [active, setActive] = useState("triangle");
 
   const handleShape = (shape) => {
-    setZoomLevel(1);
     setSelect(null);
     setActive(shape);
     if (shape === "triangle") {
